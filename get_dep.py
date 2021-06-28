@@ -1,6 +1,6 @@
 import pickle
 
-from format_tables import do
+from format_tables import do, courses_list_file_name
 
 if do:
     from format_tables import courses_list
@@ -51,7 +51,7 @@ def run_program(courses_list):
 
 if __name__ == '__main__':
     if not do:
-        courses_list = load_courses_list('courses_list.pkl')
+        courses_list = load_courses_list(courses_list_file_name)
     else:
         courses_list = courses_list
     run_program(courses_list)

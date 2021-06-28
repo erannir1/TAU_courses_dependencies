@@ -1,9 +1,10 @@
 import pandas as pd
 import pickle
+import os.path
 
 do = False
 operator = 'Eran Nir'
-# PROJECT_FILE = 'C:\\Users\\erann\\Desktop\\Eran Nir\\My Projects\\top_sort_courses'
+PROJECT_FILE = 'C:\\Users\\erann\\Desktop\\Eran Nir\\My Projects\\top_sort_courses'
 COURSE_ID_STR = 'מס\' קורס'
 TOTAL_STR = 'סה"כ'
 LIBA = ['ליבה)', 'במסלול)']
@@ -108,13 +109,15 @@ class DegreeCoursesTables:
 
 if __name__ == '__main__' or operator == 'Eran Nir':
     # do = input("RUN THE PROGRAM AGAIN?     True / False")
-    if do:
-        yedion_url = input("Enter The Yedion URL:\n for example: https://engineering.tau.ac.il/yedion/9")
+    yedion_url = input("Enter The Yedion URL:\n for example: https://engineering.tau.ac.il/yedion/9\n")
+    courses_list_file_name = "___".join([yedion_url.split('/')[-1], 'courses_list.pkl'])
+    file_exist = os.path.isfile(courses_list_file_name)
+    if do or not file_exist:
         hashmal_courses_tables = DegreeCoursesTables(yedion_url)
         tables = hashmal_courses_tables.get_courses_tables()
         # courses_list = hashmal_courses_tables.get_courses_list()
         courses_list = hashmal_courses_tables.fix_courses_names()
-        hashmal_courses_tables.dump_list_to_pkl('courses_list.pkl')
+        hashmal_courses_tables.dump_list_to_pkl(courses_list_file_name)
 
 
 
