@@ -39,7 +39,7 @@ def sublist(subset_list, main_list):
 
 def run_program(courses_list):
     course_name = input("Choose Course:\nTo exit enter 999\n")
-    while course_name != 999:
+    while course_name != str(999):
         for course in courses_list:
             if sublist(course_name.split(), course.name.split()):
                 print("Showing dependencies courses for ", course.name, ":")

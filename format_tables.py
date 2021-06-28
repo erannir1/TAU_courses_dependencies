@@ -40,9 +40,18 @@ class CourseTable:
 
 class DegreeCoursesTables:
     def __init__(self, website_address):
-        self.website_address = website_address
+        self.website_address = self.validate_website_address(website_address)
         self.tables = self.get_courses_tables()
         self.courses_list = self.get_courses_list()
+
+    def validate_website_address(self, website_address):
+        try:
+            table_mn = pd.read_html(website_address)
+        except (UnboundLocalError, ImportError, ValueError) as e:
+            print(ValueError('Bad URL - Please check the given URL.'))
+            self.website_address = input('Enter URL: ')
+            self.validate_website_address(self.website_address)
+            return self.website_address
 
     def get_courses_tables(self):
         tables = []
@@ -107,17 +116,24 @@ class DegreeCoursesTables:
         open_file.close()
 
 
-if __name__ == '__main__' or operator == 'Eran Nir':
+def main():
     # do = input("RUN THE PROGRAM AGAIN?     True / False")
     yedion_url = input("Enter The Yedion URL:\n for example: https://engineering.tau.ac.il/yedion/9\n")
+    hashmal_courses_tables = DegreeCoursesTables(yedion_url)
+    yedion_url = hashmal_courses_tables.website_address
     courses_list_file_name = "___".join([yedion_url.split('/')[-1], 'courses_list.pkl'])
     file_exist = os.path.isfile(courses_list_file_name)
+    courses_list = None
     if do or not file_exist:
-        hashmal_courses_tables = DegreeCoursesTables(yedion_url)
         tables = hashmal_courses_tables.get_courses_tables()
         # courses_list = hashmal_courses_tables.get_courses_list()
         courses_list = hashmal_courses_tables.fix_courses_names()
         hashmal_courses_tables.dump_list_to_pkl(courses_list_file_name)
+    return courses_list, courses_list_file_name
+
+
+if __name__ == '__main__' or operator == 'Eran Nir':
+    courses_list, courses_list_file_name = main()
 
 
 
