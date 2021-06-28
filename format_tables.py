@@ -109,7 +109,8 @@ class DegreeCoursesTables:
 if __name__ == '__main__' or operator == 'Eran Nir':
     # do = input("RUN THE PROGRAM AGAIN?     True / False")
     if do:
-        hashmal_courses_tables = DegreeCoursesTables('https://engineering.tau.ac.il/yedion/9')
+        yedion_url = input("Enter The Yedion URL:\n for example: https://engineering.tau.ac.il/yedion/9")
+        hashmal_courses_tables = DegreeCoursesTables(yedion_url)
         tables = hashmal_courses_tables.get_courses_tables()
         # courses_list = hashmal_courses_tables.get_courses_list()
         courses_list = hashmal_courses_tables.fix_courses_names()
